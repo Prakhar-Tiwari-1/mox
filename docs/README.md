@@ -1,4 +1,4 @@
-# Professional Association Website
+# moX Website
 
 A production-ready association website built with React, TypeScript, Tailwind CSS, Supabase, and Razorpay.
 
@@ -91,4 +91,4 @@ For questions or issues, please contact info@association.eu
 
 ## License
 
-Copyright © 2026 Professional Association. All rights reserved.
+Copyright © 2026 moX. All rights reserved.
