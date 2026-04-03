@@ -54,18 +54,18 @@ export default function About() {
   const getSampleMembers = (): CommitteeMember[] => [
     {
       id: '1',
-      name: 'Dr. Sarah Johnson',
-      role: 'President',
-      bio: 'Leading the association with over 20 years of industry experience.',
-      image_url: '/images/team/member-1.jpg',
+      name: 'Prakhar Tiwari',
+      role: 'Ai-Vic',
+      bio: 'Sponsorship & External Relations Lead',
+      image_url: 'images/team/member-1.jpeg',
       order: 1
     },
     {
       id: '2',
-      name: 'Michael Chen',
-      role: 'Vice President',
-      bio: 'Passionate about innovation and member engagement.',
-      image_url: '/images/team/member-2.jpg',
+      name: 'George EL KERR',
+      role: 'EESM-Vic',
+      bio: 'Secretary General',
+      image_url: '/images/team/member-2.jpeg',
       order: 2
     },
     {
@@ -73,7 +73,7 @@ export default function About() {
       name: 'Emma Rodriguez',
       role: 'Treasurer',
       bio: 'Ensuring financial sustainability and transparency.',
-      image_url: '/images/team/member-3.jpg',
+      image_url: '/images/team/member-3.jpeg',
       order: 3
     },
     {
@@ -81,7 +81,7 @@ export default function About() {
       name: 'David Okonkwo',
       role: 'Secretary',
       bio: 'Committed to clear communication and member support.',
-      image_url: '/images/team/member-4.jpg',
+      image_url: '/images/team/member-4.jpeg',
       order: 4
     }
   ];

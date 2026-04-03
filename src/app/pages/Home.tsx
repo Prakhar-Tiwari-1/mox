@@ -88,7 +88,7 @@ export default function Home() {
             <div className="relative">
               <div className="aspect-[16/9] rounded-lg overflow-hidden shadow-2xl">
                 <ImageWithFallback
-                  src="/images/hero-team.jpg"
+                  src="/images/hero-team.png"
                   alt="Professional team collaboration"
                   className="w-full h-full object-cover"
                 />
