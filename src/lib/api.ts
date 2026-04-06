@@ -3,49 +3,14 @@ import { projectId, publicAnonKey } from '/utils/supabase/info';
 const API_BASE = `https://${projectId}.supabase.co/functions/v1/make-server-d8ebeed1`;
 
 export const api = {
-  async createRazorpayOrder(data: {
-    amount: number;
-    currency: string;
-    receipt: string;
-    notes?: Record<string, string>;
-  }) {
-    const response = await fetch(`${API_BASE}/create-order`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${publicAnonKey}`,
-      },
-      body: JSON.stringify(data),
-    });
-
-    if (!response.ok) {
-      const error = await response.text();
-      throw new Error(`Failed to create order: ${error}`);
-    }
-
-    return response.json();
+  // Payments have been disabled. These helper methods are retained as no-ops
+  // that immediately reject to avoid accidental use elsewhere in the app.
+  async createRazorpayOrder(): Promise<never> {
+    throw new Error('Payments are disabled in this deployment.');
   },
 
-  async verifyRazorpayPayment(data: {
-    razorpay_order_id: string;
-    razorpay_payment_id: string;
-    razorpay_signature: string;
-  }) {
-    const response = await fetch(`${API_BASE}/verify-payment`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${publicAnonKey}`,
-      },
-      body: JSON.stringify(data),
-    });
-
-    if (!response.ok) {
-      const error = await response.text();
-      throw new Error(`Payment verification failed: ${error}`);
-    }
-
-    return response.json();
+  async verifyRazorpayPayment(): Promise<never> {
+    throw new Error('Payments are disabled in this deployment.');
   },
 
   async uploadBrochure(file: File) {

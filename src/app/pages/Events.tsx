@@ -172,15 +172,10 @@ export default function Events() {
         />
       </div>
       <CardHeader className="flex-1">
-        <div className="flex items-center justify-between mb-2">
+        <div className="mb-2">
           <Badge variant={event.status === 'upcoming' ? 'default' : 'secondary'}>
             {event.category}
           </Badge>
-          {event.price === 0 ? (
-            <span className="text-sm font-semibold text-green-600">Free</span>
-          ) : (
-            <span className="text-sm font-semibold text-[#0f3d5f]">€{event.price}</span>
-          )}
         </div>
         <CardTitle className="text-xl">{event.title}</CardTitle>
         <CardDescription className="line-clamp-2">{event.description}</CardDescription>

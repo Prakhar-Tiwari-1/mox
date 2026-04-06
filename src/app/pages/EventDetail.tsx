@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router';
-import { Calendar, MapPin, Users, Clock, ArrowLeft, CreditCard } from 'lucide-react';
+import { Calendar, MapPin, Users, Clock, ArrowLeft } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
@@ -288,21 +288,11 @@ export default function EventDetail() {
                     </div>
                   </div>
 
-                  <div className="flex items-start space-x-3">
-                    <CreditCard className="h-5 w-5 text-[#0f3d5f] flex-shrink-0 mt-0.5" />
-                    <div>
-                      <p className="font-semibold text-sm text-gray-500">Price</p>
-                      <p className="text-2xl font-bold text-[#0f3d5f]">
-                        {event.price === 0 ? 'Free' : `€${event.price}`}
-                      </p>
-                    </div>
-                  </div>
-
                   {event.status === 'upcoming' && (
                     <div className="pt-4">
-                      <Link to={`/payment?event=${event.id}&amount=${event.price}&type=event`}>
+                      <Link to="/contact">
                         <Button className="w-full" size="lg">
-                          {event.price === 0 ? 'Register Now' : 'Register & Pay'}
+                          Register
                         </Button>
                       </Link>
                     </div>

@@ -5,7 +5,6 @@ import About from "./pages/About";
 import Events from "./pages/Events";
 import EventDetail from "./pages/EventDetail";
 import Calendar from "./pages/Calendar";
-import Payment from "./pages/Payment";
 import Partnership from "./pages/Partnership";
 import Contact from "./pages/Contact";
 import Clubs from "./pages/Clubs";
@@ -23,7 +22,7 @@ export const router = createBrowserRouter([
       { path: "events", Component: Events },
       { path: "events/:eventId", Component: EventDetail },
       { path: "calendar", Component: Calendar },
-      { path: "payment", Component: Payment },
+      
       { path: "partnership", Component: Partnership },
       { path: "clubs", Component: Clubs },
       { path: "programmes", Component: Programmes },
