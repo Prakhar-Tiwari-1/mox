@@ -52,7 +52,7 @@ export function AdminLayout() {
 
       {/* Sidebar */}
       <aside
-        className={`fixed lg:static inset-y-0 left-0 z-40 w-64 bg-[#0a203c] text-white flex flex-col transition-transform duration-200 ${
+        className={`fixed lg:static inset-y-0 left-0 z-40 w-64 bg-[#0c1c3b] text-white flex flex-col transition-transform duration-200 ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         }`}
       >

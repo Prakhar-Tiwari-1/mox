@@ -242,19 +242,25 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Mission Statement */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-6 text-gray-900">What is MoX?</h2>
-          <p className="text-lg text-gray-700 leading-relaxed mb-4">
-            MoX is the official student body for all Masters of Science and Technology (MScT) students at École Polytechnique or l'X. We represent ~350 students from over 40 countries, studying across specialised programmes in AI, data science, energy transition, visual computing, and more.
-          </p>
-          <p className="text-lg text-gray-700 leading-relaxed mb-4">
-            We oversee all Masters student clubs (binets), manage their budgets, and organise major events like MX Bloom, Trip to Park Asterisk and much more. Throughout the year, we also serve as the institutional bridge between students and the school administration - including regular engagement with the Directrice Générale of École Polytechnique.
-          </p>
-          <p className="text-lg text-gray-900 font-medium leading-relaxed">
-            MoX is not a club. We are the student body for the entire MX community.
-          </p>
+      {/* What is MoX? (text-only, centered) */}
+      <section className="py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center">
+            <div className="max-w-3xl text-center">
+              <h2 className="text-3xl font-bold mb-6 text-gray-900">What is MoX?</h2>
+              <div className="space-y-4 text-gray-700">
+                <p>
+                  MoX is the official student body for all Masters of Science and Technology (MScT) students at École Polytechnique or l'X. We represent ~350 students from over 40 countries, studying across specialised programmes in AI, data science, energy transition, visual computing, and more.
+                </p>
+                <p>
+                  We oversee all Masters student clubs (binets), manage their budgets, and organise major events like MX Bloom, Trip to Park Asterisk and much more. Throughout the year, we also serve as the institutional bridge between students and the school administration - including regular engagement with the Directrice Générale of École Polytechnique.
+                </p>
+                <p className="text-gray-900 font-medium">
+                  MoX is not a club. We are the student body for the entire MX community.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

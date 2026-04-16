@@ -45,10 +45,9 @@ export default function Partnership() {
             <div>
               <h2 className="text-3xl font-bold mb-6 text-gray-900">Why Partner With Us?</h2>
               <p className="text-gray-700 mb-6">
-                Our association brings together over 5,000 professionals across Europe, creating 
-                unparalleled opportunities for collaboration, innovation, and growth. As a partner, 
-                you'll gain access to our extensive network and enhance your organization's visibility 
-                in the professional community.
+                The X network is considered one of the most powerful professional networks in the world - alumni 
+                include 3 French Presidents, 3 Nobel Prize winners, a Fields Medalist, and the CEOs of many
+                 of France's largest companies.
               </p>
               <p className="text-gray-700 mb-8">
                 We offer flexible partnership packages designed to align with your business goals and 

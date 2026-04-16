@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Mail, Phone, MapPin, Send, Check } from 'lucide-react';
+import { Mail, Instagram, MapPin, Send, Check } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
@@ -68,7 +68,7 @@ export default function Contact() {
   if (success) {
     return (
       <div className="min-h-screen">
-        <section className="bg-gradient-to-br from-[#0a203c] to-[#1a5a7f] text-white py-20">
+        <section className="bg-gradient-to-br from-[#0c1c3b] to-[#1a5a7f] text-white py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Contact Us</h1>
             <p className="text-xl text-white/90 max-w-3xl">
@@ -107,7 +107,7 @@ export default function Contact() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-[#0a203c] to-[#1a5a7f] text-white py-20">
+      <section className="bg-gradient-to-br from-[#0c1c3b] to-[#1a5a7f] text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Contact Us</h1>
           <p className="text-xl text-white/90 max-w-3xl">
@@ -203,12 +203,12 @@ export default function Contact() {
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="flex items-start space-x-4">
-                    <div className="w-10 h-10 bg-[#0a203c] rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="w-10 h-10 bg-[#0c1c3b] rounded-full flex items-center justify-center flex-shrink-0">
                       <Mail className="h-5 w-5 text-white" />
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1">Email</h3>
-                      <a href="mailto:mox@polytechnique.fr" className="text-[#0a203c] hover:underline">
+                      <a href="mailto:mox@polytechnique.fr" className="text-[#0c1c3b] hover:underline">
                         mox@polytechnique.fr
                       </a>
                       <p className="text-sm text-gray-600 mt-1">
@@ -218,35 +218,37 @@ export default function Contact() {
                   </div>
 
                   <div className="flex items-start space-x-4">
-                    <div className="w-10 h-10 bg-[#0a203c] rounded-full flex items-center justify-center flex-shrink-0">
-                      <Phone className="h-5 w-5 text-white" />
+                    <div className="w-10 h-10 bg-[#0c1c3b] rounded-full flex items-center justify-center flex-shrink-0">
+                      <Instagram className="h-5 w-5 text-white" />
                     </div>
                     <div>
-                      <h3 className="font-semibold mb-1">Phone</h3>
-                      <a href="tel:+32123456789" className="text-[#0a203c] hover:underline">
-                        +32 1 234 567 89
+                      <h3 className="font-semibold mb-1">Instagram</h3>
+                      <a
+                        href="https://www.instagram.com/mox_polytechnique?igsh=MW9hbHprczh4Mmk1ZQ=="
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#0c1c3b] hover:underline"
+                      >
+                        @mox_polytechnique
                       </a>
                       <p className="text-sm text-gray-600 mt-1">
-                        Monday - Friday, 9:00 AM - 5:00 PM CET
+                        Follow us for updates and events
                       </p>
                     </div>
                   </div>
 
                   <div className="flex items-start space-x-4">
-                    <div className="w-10 h-10 bg-[#0a203c] rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="w-10 h-10 bg-[#0c1c3b] rounded-full flex items-center justify-center flex-shrink-0">
                       <MapPin className="h-5 w-5 text-white" />
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1">Office</h3>
                       <p className="text-gray-700">
-                        Batiment 78<br />
+                        Batiment 76 <br />
                         École Polytechnique<br />
-                        Route de Saclay<br />
+                        78 Bd des Marechaux<br />
                         91128 Palaiseau, Île-de-France<br />
                         France
-                      </p>
-                      <p className="text-sm text-gray-600 mt-1">
-                        Visit us during office hours
                       </p>
                     </div>
                   </div>
@@ -259,14 +261,14 @@ export default function Contact() {
                 </CardHeader>
                 <CardContent className="p-0 h-64">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2519.1983449613245!2d4.3515!3d50.8465!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTDCsDUwJzQ3LjQiTiA0wrAyMScwNS40IkU!5e0!3m2!1sen!2sbe!4v1234567890"
+                    src="https://www.google.com/maps?q=Batiment+76+%C3%89cole+Polytechnique+78+Bd+des+Marechaux+91128+Palaiseau+Ile-de-France+France&output=embed"
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
                     allowFullScreen
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
-                    title="Office location"
+                    title="location"
                     className="rounded-b-lg"
                   />
                 </CardContent>

@@ -81,7 +81,7 @@ A production-ready association website built with React, TypeScript, Tailwind CS
 
 ## Brand Guidelines
 
-- **Primary Color**: #0a203c (Deep blue)
+- **Primary Color**: #0c1c3b (Deep blue)
 - **Currency**: Euro (€)
 - **Design**: Professional, trustworthy, modern
 

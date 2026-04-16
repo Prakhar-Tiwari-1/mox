@@ -203,8 +203,8 @@ export default function EventDetail() {
     <div className="min-h-screen">
       {/* Breadcrumb */}
       <section className="bg-gray-50 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Link to="/events" className="inline-flex items-center text-[#0a203c] hover:underline">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <Link to="/events" className="inline-flex items-center text-[#0c1c3b] hover:underline">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Events
           </Link>
@@ -251,7 +251,7 @@ export default function EventDetail() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-start space-x-3">
-                    <Calendar className="h-5 w-5 text-[#0a203c] flex-shrink-0 mt-0.5" />
+                    <Calendar className="h-5 w-5 text-[#0c1c3b] flex-shrink-0 mt-0.5" />
                     <div>
                       <p className="font-semibold text-sm text-gray-500">Date</p>
                       <p className="text-gray-900">
@@ -265,7 +265,7 @@ export default function EventDetail() {
                   </div>
 
                   <div className="flex items-start space-x-3">
-                    <Clock className="h-5 w-5 text-[#0a203c] flex-shrink-0 mt-0.5" />
+                    <Clock className="h-5 w-5 text-[#0c1c3b] flex-shrink-0 mt-0.5" />
                     <div>
                       <p className="font-semibold text-sm text-gray-500">Time</p>
                       <p className="text-gray-900">{event.time}</p>
@@ -273,7 +273,7 @@ export default function EventDetail() {
                   </div>
 
                   <div className="flex items-start space-x-3">
-                    <MapPin className="h-5 w-5 text-[#0a203c] flex-shrink-0 mt-0.5" />
+                    <MapPin className="h-5 w-5 text-[#0c1c3b] flex-shrink-0 mt-0.5" />
                     <div>
                       <p className="font-semibold text-sm text-gray-500">Location</p>
                       <p className="text-gray-900">{event.location}</p>
@@ -281,7 +281,7 @@ export default function EventDetail() {
                   </div>
 
                   <div className="flex items-start space-x-3">
-                    <Users className="h-5 w-5 text-[#0a203c] flex-shrink-0 mt-0.5" />
+                    <Users className="h-5 w-5 text-[#0c1c3b] flex-shrink-0 mt-0.5" />
                     <div>
                       <p className="font-semibold text-sm text-gray-500">Capacity</p>
                       <p className="text-gray-900">Max {event.max_attendees} attendees</p>

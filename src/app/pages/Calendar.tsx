@@ -102,7 +102,7 @@ export default function Calendar() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-[#0a203c] to-[#1a5a7f] text-white py-20">
+      <section className="bg-gradient-to-br from-[#0c1c3b] to-[#1a5a7f] text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">MoX Calendar</h1>
           <p className="text-xl text-white/90 max-w-3xl">
@@ -167,10 +167,10 @@ export default function Calendar() {
                           date.getMonth() === new Date().getMonth() &&
                           date.getFullYear() === new Date().getFullYear();
 
-                        return (
+                          return (
                           <div
                             key={day}
-                            className={`aspect-square border rounded-lg p-2 relative ${isToday ? 'bg-[#0a203c] text-white border-[#0a203c]' : 'border-gray-200 hover:border-[#0a203c]'
+                            className={`aspect-square border rounded-lg p-2 relative ${isToday ? 'bg-[#0c1c3b] text-white border-[#0c1c3b]' : 'border-gray-200 hover:border-[#0c1c3b]'
                               } ${dateEvents.length > 0 ? 'cursor-pointer' : ''}`}
                           >
                             <div className="text-sm font-medium">{day}</div>
@@ -215,7 +215,7 @@ export default function Calendar() {
                           <Link
                             key={event.id}
                             to={`/events/${event.id}`}
-                            className="block p-3 border border-gray-200 rounded-lg hover:border-[#0a203c] hover:shadow-md transition-all"
+                            className="block p-3 border border-gray-200 rounded-lg hover:border-[#0c1c3b] hover:shadow-md transition-all"
                           >
                             <div className="flex justify-between items-start mb-2">
                               <h4 className="font-semibold text-sm line-clamp-2">{event.title}</h4>

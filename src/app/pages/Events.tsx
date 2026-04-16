@@ -181,9 +181,9 @@ export default function Events() {
         <CardDescription className="line-clamp-2">{event.description}</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="space-y-2 mb-4 text-sm text-gray-600">
-          <div className="flex items-center space-x-2">
-            <Calendar className="h-4 w-4 text-[#0a203c]" />
+            <div className="space-y-2 mb-4 text-sm text-gray-600">
+              <div className="flex items-center space-x-2">
+                <Calendar className="h-4 w-4 text-[#0c1c3b]" />
             <span>{new Date(event.date).toLocaleDateString('en-GB', { 
               year: 'numeric', 
               month: 'long', 
@@ -191,11 +191,11 @@ export default function Events() {
             })} at {event.time}</span>
           </div>
           <div className="flex items-center space-x-2">
-            <MapPin className="h-4 w-4 text-[#0a203c]" />
+            <MapPin className="h-4 w-4 text-[#0c1c3b]" />
             <span>{event.location}</span>
           </div>
           <div className="flex items-center space-x-2">
-            <Users className="h-4 w-4 text-[#0a203c]" />
+            <Users className="h-4 w-4 text-[#0c1c3b]" />
             <span>Max {event.max_attendees} attendees</span>
           </div>
         </div>
@@ -212,7 +212,7 @@ export default function Events() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-[#0a203c] to-[#1a5a7f] text-white py-20">
+      <section className="bg-gradient-to-br from-[#0c1c3b] to-[#1a5a7f] text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">MoX Events</h1>
           <p className="text-xl text-white/90 max-w-3xl">

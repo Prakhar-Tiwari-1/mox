@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router';
-import { Info, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { Button } from './ui/button';
-import InfoButton from './ui/InfoButton';
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -87,18 +86,16 @@ export function Header() {
               )}
             </button>
 
-            {/* Info icon with popup - visible on desktop only */}
+            {/* Partner With Us button - visible on desktop only */}
             <div className="hidden md:inline-flex">
-              <InfoButton
-                content={
-                  <div>
-                    <p className="font-semibold">Quick Info</p>
-                    <p className="text-sm mt-1">📧 Email: mox@polytechnique.fr</p>
-                    <p className="text-sm">📞 Phone: +32 123 456 789</p>
-                    <p className="text-sm">📍 Batiment 78, École Polytechnique, Palaiseau, France</p>
-                  </div>
-                }
-              />
+              <Button variant="outline" asChild>
+                <Link
+                  to="/partnership"
+                  className="px-3 py-2 border-white text-white bg-transparent hover:bg-white hover:text-black transition-colors"
+                >
+                  Partner With Us
+                </Link>
+              </Button>
             </div>
           </div>
         </div>
