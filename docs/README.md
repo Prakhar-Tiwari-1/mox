@@ -1,4 +1,4 @@
-# moX Website
+# MoX Website
 
 A production-ready association website built with React, TypeScript, Tailwind CSS, Supabase, and Razorpay.
 
