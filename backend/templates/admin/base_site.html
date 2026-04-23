@@ -1,0 +1,25 @@
+{% extends "admin/base.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'admin/mox-admin.css' %}">
+{% endblock %}
+
+{% block branding %}
+<div id="site-name">
+  <a href="{% url 'admin:index' %}" class="mox-admin-brand">MoX Control Panel</a>
+</div>
+<nav class="mox-mobile-admin-nav" aria-label="MoX admin mobile navigation">
+  <a href="{% url 'admin:index' %}">Dashboard</a>
+  <a href="{% url 'admin:content_event_changelist' %}">Events</a>
+  <a href="{% url 'admin:content_club_changelist' %}">Clubs</a>
+  <a href="{% url 'admin:content_clubmember_changelist' %}">Club members</a>
+  <a href="{% url 'admin:content_leadershipmember_changelist' %}">Leadership</a>
+  <a href="{% url 'admin:content_contactmessage_changelist' %}">Messages</a>
+  <a href="{% url 'admin:content_faqitem_changelist' %}">FAQ</a>
+  <a href="{% url 'admin:users_user_changelist' %}">Users</a>
+</nav>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

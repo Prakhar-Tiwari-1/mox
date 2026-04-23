@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import { Mail, MapPin, Linkedin, Instagram } from 'lucide-react';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -12,7 +12,7 @@ export function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">MoX</h3>
             <p className="text-gray-400 text-sm mb-4">
-              The official student body for Masters students at École Polytechnique.
+              The student association for Masters students at École Polytechnique.
             </p>
             <div className="flex space-x-4">
               <a href="https://www.instagram.com/mox_polytechnique/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
@@ -31,6 +31,11 @@ export function Footer() {
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2 text-sm">
               
+              <li>
+                <Link to="/about" className="text-gray-400 hover:text-white transition-colors">
+                  About Us
+                </Link>
+              </li>
               <li>
                 <Link to="/events" className="text-gray-400 hover:text-white transition-colors">
                   Events
@@ -66,10 +71,10 @@ export function Footer() {
               <li className="flex items-start space-x-3">
                 <MapPin className="h-5 w-5 text-gray-400 flex-shrink-0 mt-0.5" />
                 <span className="text-gray-400">
-                  MoX Locale, Batiment 78<br />
+                  MoX Locale, Bâtiment 76<br />
                   École Polytechnique<br />
                   Route de Saclay<br />
-                  91128 Palaiseau, Île-de-France<br />
+                  91120 Palaiseau, Île-de-France<br />
                   France
                 </span>
               </li>
@@ -83,8 +88,11 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-6 pt-6 border-t border-gray-800 text-center text-sm text-gray-400">
-          <p>&copy; {currentYear} MoX - Designed and Developed by <a href="https://uxnarendra.vercel.app/" target="_blank" rel="noopener noreferrer">Narendra Prajapati</a></p>
+        <div className="mt-6 pt-6 border-t border-gray-800 text-center text-sm text-gray-400 space-y-2">
+          <p>&copy; {currentYear} MoX</p>
+          <p>
+            This is not an official École Polytechnique website. It is a website for the Masters student association.
+          </p>
         </div>
       </div>
     </footer>

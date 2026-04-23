@@ -5,7 +5,7 @@ import { Button } from './ui/button';
 
 const navigation = [
   { name: 'Home', href: '/' },
-  { name: 'Programmes', href: '/programmes' },
+  { name: 'About Us', href: '/about' },
   { name: 'Events', href: '/events' },
   { name: 'Calendar', href: '/calendar' },
   { name: 'Clubs', href: '/clubs' },
@@ -123,8 +123,7 @@ export function Header() {
                 <h3 className="px-3 text-sm font-semibold text-white/90 mb-3">Quick Info</h3>
                 <div className="px-3 space-y-2 text-sm text-white/70">
                   <p>📧 Email: mox@polytechnique.fr</p>
-                  <p>📞 Phone: +32 123 456 789</p>
-                  <p>📍 Batiment 78, École Polytechnique, Palaiseau, France</p>
+                  <p>📍 MoX Locale, Bâtiment 76, École Polytechnique, 91120 Palaiseau, France</p>
                 </div>
               </div>
             </div>

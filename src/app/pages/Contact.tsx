@@ -1,20 +1,30 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Mail, Instagram, MapPin, Send, Check } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { Textarea } from '../components/ui/textarea';
-import { supabase } from '../../lib/supabase';
 import { toast } from 'sonner';
+import { fetchFaqs, submitContactMessage } from '../../lib/moxApi';
+import { faqFallback, type FAQItem } from '../../lib/siteContent';
 
 export default function Contact() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
+  const [website, setWebsite] = useState('');
+  const [faqs, setFaqs] = useState<FAQItem[]>(faqFallback);
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    void (async () => {
+      const data = await fetchFaqs();
+      setFaqs(data);
+    })();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,27 +36,7 @@ export default function Contact() {
 
     try {
       setSubmitting(true);
-
-      // Save to Supabase
-      const { error } = await supabase
-        .from('contact_submissions')
-        .insert([
-          {
-            name,
-            email,
-            subject,
-            message,
-            created_at: new Date().toISOString()
-          }
-        ]);
-
-      if (error) {
-        console.error('Error saving contact submission:', error);
-        // Even if Supabase fails, show success to user
-        toast.warning('Your message was recorded but may not be saved to our database. We will still respond to your email.');
-      } else {
-        console.log('Contact submission saved successfully');
-      }
+      await submitContactMessage({ name, email, subject, message, website });
 
       setSuccess(true);
       toast.success('Message sent successfully! We will get back to you soon.');
@@ -56,6 +46,7 @@ export default function Contact() {
       setEmail('');
       setSubject('');
       setMessage('');
+      setWebsite('');
 
     } catch (error) {
       console.error('Error submitting contact form:', error);
@@ -131,6 +122,19 @@ export default function Contact() {
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleSubmit} className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="contact-website" className="sr-only">Website</Label>
+                      <Input
+                        id="contact-website"
+                        value={website}
+                        onChange={(e) => setWebsite(e.target.value)}
+                        placeholder="Website"
+                        autoComplete="off"
+                        tabIndex={-1}
+                        className="hidden"
+                      />
+                    </div>
+
                     <div className="space-y-2">
                       <Label htmlFor="contact-name">Full Name *</Label>
                       <Input
@@ -244,10 +248,10 @@ export default function Contact() {
                     <div>
                       <h3 className="font-semibold mb-1">Office</h3>
                       <p className="text-gray-700">
-                        Batiment 76 <br />
+                        MoX Locale, Bâtiment 76 <br />
                         École Polytechnique<br />
                         78 Bd des Marechaux<br />
-                        91128 Palaiseau, Île-de-France<br />
+                        91120 Palaiseau, Île-de-France<br />
                         France
                       </p>
                     </div>
@@ -261,7 +265,7 @@ export default function Contact() {
                 </CardHeader>
                 <CardContent className="p-0 h-64">
                   <iframe
-                    src="https://www.google.com/maps?q=Batiment+76+%C3%89cole+Polytechnique+78+Bd+des+Marechaux+91128+Palaiseau+Ile-de-France+France&output=embed"
+                    src="https://www.google.com/maps?q=Batiment+76+%C3%89cole+Polytechnique+78+Bd+des+Marechaux+91120+Palaiseau+Ile-de-France+France&output=embed"
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
@@ -283,41 +287,16 @@ export default function Contact() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold mb-8 text-center text-gray-900">Frequently Asked Questions</h2>
           <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">How long does it take to process membership applications?</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-700">
-                  Membership applications are typically processed within 3-5 business days. You will receive 
-                  a confirmation email once your application is approved.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Can I cancel my event registration?</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-700">
-                  Yes, event registrations can be cancelled up to 7 days before the event for a full refund. 
-                  Please contact us with your registration details.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Do you offer corporate memberships?</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-700">
-                  Yes, we offer corporate membership packages for organizations. Please contact us for 
-                  more information about pricing and benefits.
-                </p>
-              </CardContent>
-            </Card>
+            {faqs.map((faq) => (
+              <Card key={faq.id}>
+                <CardHeader>
+                  <CardTitle className="text-lg">{faq.question}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-700">{faq.answer}</p>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>

@@ -4,22 +4,14 @@ import { Calendar as CalendarIcon, ChevronLeft, ChevronRight } from 'lucide-reac
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
-import { supabase } from '../../lib/supabase';
 import { Skeleton } from '../components/ui/skeleton';
-
-interface Event {
-  id: string;
-  title: string;
-  date: string;
-  time: string;
-  category: string;
-  status: 'upcoming' | 'past';
-}
+import { fetchEvents, type PublicEvent } from '../../lib/moxApi';
 
 export default function Calendar() {
-  const [events, setEvents] = useState<Event[]>([]);
+  const [events, setEvents] = useState<PublicEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   useEffect(() => {
     loadEvents();
@@ -29,17 +21,8 @@ export default function Calendar() {
     try {
       setLoading(true);
 
-      const { data, error: fetchError } = await supabase
-        .from('events')
-        .select('id, title, date, time, category, status')
-        .order('date', { ascending: true });
-
-      if (fetchError) {
-        console.error('Error fetching events:', fetchError);
-        setEvents(getSampleEvents());
-      } else {
-        setEvents(data && data.length > 0 ? data : getSampleEvents());
-      }
+      const data = await fetchEvents();
+      setEvents(data.length > 0 ? data : getSampleEvents());
     } catch (err) {
       console.error('Error loading events:', err);
       setEvents(getSampleEvents());
@@ -48,13 +31,11 @@ export default function Calendar() {
     }
   };
 
-  const getSampleEvents = (): Event[] => [
-    { id: '1', title: 'Bloom X Party', date: '2026-09-10', time: '21:00', category: 'Party', status: 'upcoming' },
-    { id: '2', title: 'X-Forum Career Fair', date: '2026-10-15', time: '09:00', category: 'Partnership', status: 'upcoming' },
-    { id: '3', title: 'MScT Registration Deadline', date: '2026-08-30', time: '23:59', category: 'Academic', status: 'upcoming' },
-    { id: '4', title: 'X Got Talent', date: '2026-02-15', time: '19:00', category: 'Showcase', status: 'upcoming' },
-    { id: '5', title: 'MScT Gala', date: '2026-06-20', time: '20:00', category: 'Social', status: 'upcoming' },
-    { id: '6', title: 'Company Cocktail', date: '2026-03-05', time: '18:30', category: 'Networking', status: 'upcoming' },
+  const getSampleEvents = (): PublicEvent[] => [
+    { id: '1', slug: 'bloom-x-party', title: 'Bloom X Party', date: '2026-09-10', time: '21:00', category: 'Party', status: 'upcoming', description: '', location: '', image_url: '/images/events/event-1.jpg', max_attendees: 200 },
+    { id: '2', slug: 'x-forum-career-fair', title: 'X-Forum Career Fair', date: '2026-10-15', time: '09:00', category: 'Partnership', status: 'upcoming', description: '', location: '', image_url: '/images/events/event-2.jpg', max_attendees: 200 },
+    { id: '3', slug: 'x-got-talent', title: 'X Got Talent', date: '2026-02-15', time: '19:00', category: 'Showcase', status: 'upcoming', description: '', location: '', image_url: '/images/events/event-1.jpg', max_attendees: 300 },
+    { id: '4', slug: 'msct-gala', title: 'MScT Gala', date: '2026-06-20', time: '20:00', category: 'Social', status: 'upcoming', description: '', location: '', image_url: '/images/events/event-2.jpg', max_attendees: 400 },
   ];
 
   const getDaysInMonth = (date: Date) => {
@@ -77,6 +58,7 @@ export default function Calendar() {
   };
 
   const { daysInMonth, startingDayOfWeek, year, month } = getDaysInMonth(currentDate);
+  const selectedDateEvents = selectedDate ? getEventsForDate(selectedDate) : [];
 
   const previousMonth = () => {
     setCurrentDate(new Date(year, month - 1, 1));
@@ -170,8 +152,17 @@ export default function Calendar() {
                           return (
                           <div
                             key={day}
-                            className={`aspect-square border rounded-lg p-2 relative ${isToday ? 'bg-[#0c1c3b] text-white border-[#0c1c3b]' : 'border-gray-200 hover:border-[#0c1c3b]'
-                              } ${dateEvents.length > 0 ? 'cursor-pointer' : ''}`}
+                            onClick={() => setSelectedDate(date)}
+                            className={`aspect-square border rounded-lg p-2 relative cursor-pointer transition-colors ${
+                              selectedDate &&
+                              date.getDate() === selectedDate.getDate() &&
+                              date.getMonth() === selectedDate.getMonth() &&
+                              date.getFullYear() === selectedDate.getFullYear()
+                                ? 'border-[#0c1c3b] bg-[#eaf3fa]'
+                                : isToday
+                                  ? 'bg-[#0c1c3b] text-white border-[#0c1c3b]'
+                                  : 'border-gray-200 hover:border-[#0c1c3b]'
+                            }`}
                           >
                             <div className="text-sm font-medium">{day}</div>
                             {dateEvents.length > 0 && (
@@ -214,7 +205,7 @@ export default function Calendar() {
                         .map((event) => (
                           <Link
                             key={event.id}
-                            to={`/events/${event.id}`}
+                            to={`/events/${event.slug || event.id}`}
                             className="block p-3 border border-gray-200 rounded-lg hover:border-[#0c1c3b] hover:shadow-md transition-all"
                           >
                             <div className="flex justify-between items-start mb-2">
@@ -241,6 +232,53 @@ export default function Calendar() {
               </Card>
             </div>
           </div>
+
+          {selectedDate && !loading && (
+            <div className="mt-8">
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between gap-4">
+                  <CardTitle>
+                    {`Events on ${selectedDate.toLocaleDateString('en-GB', {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric',
+                    })}`}
+                  </CardTitle>
+                  <Button variant="outline" onClick={() => setSelectedDate(null)}>
+                    Clear selection
+                  </Button>
+                </CardHeader>
+                <CardContent>
+                  {selectedDateEvents.length > 0 ? (
+                    <div className="grid md:grid-cols-2 gap-4">
+                      {selectedDateEvents.map((event) => (
+                        <Link
+                          key={event.id}
+                          to={`/events/${event.slug || event.id}`}
+                          className="block p-4 border border-gray-200 rounded-lg hover:border-[#0c1c3b] hover:shadow-md transition-all"
+                        >
+                          <div className="flex justify-between items-start gap-3 mb-2">
+                            <h4 className="font-semibold text-base line-clamp-2">{event.title}</h4>
+                            <Badge variant="outline" className="flex-shrink-0">
+                              {event.category}
+                            </Badge>
+                          </div>
+                          <p className="text-sm text-gray-600">
+                            {event.time ? `${event.time}` : 'Time to be confirmed'}
+                          </p>
+                          {event.location && (
+                            <p className="text-sm text-gray-500 mt-1">{event.location}</p>
+                          )}
+                        </Link>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-center text-gray-500 py-6">No events on this day.</p>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+          )}
         </div>
       </section>
 

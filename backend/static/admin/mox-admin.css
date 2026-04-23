@@ -1,0 +1,1110 @@
+:root {
+  --primary: #0c1c3b;
+  --secondary: #1a5a7f;
+  --accent: #d8b15b;
+  --surface: #ffffff;
+  --surface-alt: #f7fafc;
+  --surface-soft: #f2f6fa;
+  --border: #dfe8ef;
+  --text: #16243d;
+  --muted: #60788f;
+  --shadow-lg: 0 24px 64px rgba(12, 28, 59, 0.14);
+  --shadow-md: 0 16px 40px rgba(12, 28, 59, 0.1);
+}
+
+html, body {
+  background: linear-gradient(180deg, #eef4f8 0%, #f7fafc 24%, #fbfdff 100%);
+  color: var(--text);
+}
+
+body,
+input,
+textarea,
+select,
+button {
+  font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+a {
+  color: var(--secondary);
+}
+
+a:hover {
+  color: var(--primary);
+}
+
+#header {
+  background: linear-gradient(120deg, var(--primary), var(--secondary));
+  color: #fff;
+  box-shadow: 0 14px 36px rgba(12, 28, 59, 0.16);
+}
+
+#branding h1, #branding h1 a, #site-name a {
+  color: #fff !important;
+}
+
+.mox-admin-brand {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.mox-mobile-admin-nav {
+  display: none;
+}
+
+div.breadcrumbs {
+  background: #102645;
+  border: none;
+  color: rgba(255,255,255,0.9);
+}
+
+.module h2, .module caption, .inline-group h2 {
+  background: #14335d;
+}
+
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+  background: var(--accent);
+  border: none;
+  color: #1a1a1a;
+}
+
+.button.default, input[type=submit].default, .submit-row input.default {
+  background: var(--accent);
+}
+
+.button:hover, input[type=submit]:hover, input[type=button]:hover, a.button:hover {
+  background: #c79a38;
+  color: #111;
+}
+
+.selector-chosen h2,
+.selector-available h2 {
+  background: #14335d !important;
+}
+
+.object-tools a:link, .object-tools a:visited {
+  background: #14335d;
+}
+
+.object-tools a:hover, .object-tools a:focus {
+  background: var(--secondary);
+}
+
+#container {
+  min-width: 0;
+}
+
+#container,
+#container #content,
+#container #content-main,
+#container #content-related {
+  min-width: 0;
+}
+
+#content {
+  padding: 24px;
+}
+
+#content-main,
+#content-related,
+.submit-row,
+.inline-group,
+.module,
+#changelist-filter,
+.paginator,
+form .aligned fieldset {
+  border-radius: 12px;
+}
+
+.module,
+.inline-group,
+#changelist-filter,
+#changelist .actions,
+#changelist .paginator,
+.submit-row,
+.messagelist li,
+.dashboard #content .module,
+form .aligned fieldset {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: none;
+}
+
+.dashboard #content {
+  width: 100%;
+}
+
+#content-main .module,
+.change-form #content-main .module,
+.change-list #content-main .module,
+form .aligned fieldset.module {
+  overflow: hidden;
+}
+
+.module table,
+#result_list,
+.change-list table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+}
+
+#result_list thead th,
+.change-list thead th,
+.module thead th {
+  background: #f6f9fc;
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+  padding: 12px 14px;
+}
+
+#result_list tbody td,
+#result_list tbody th,
+.change-list tbody td,
+.change-list tbody th {
+  padding: 10px 14px;
+  border-bottom: 1px solid #edf2f6;
+  vertical-align: middle;
+}
+
+#result_list tbody tr:last-child td,
+#result_list tbody tr:last-child th {
+  border-bottom: 0;
+}
+
+#result_list tbody tr:hover,
+.change-list tbody tr:hover {
+  background: #fafcff;
+}
+
+.form-row,
+.aligned .form-row {
+  padding: 18px 22px;
+  border-bottom: 1px solid #edf2f6;
+}
+
+.aligned .form-row:last-child,
+.form-row:last-child {
+  border-bottom: 0;
+}
+
+.aligned label,
+.form-row label {
+  color: var(--text);
+  font-weight: 600;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="url"],
+input[type="number"],
+input[type="tel"],
+textarea,
+select,
+.vTextField,
+.vURLField,
+.vIntegerField,
+.vLargeTextField {
+  border: 1px solid #ccd8e2;
+  border-radius: 14px;
+  background: #fff;
+  color: var(--text);
+  padding: 12px 14px;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+.vTextField:focus,
+.vURLField:focus,
+.vIntegerField:focus,
+.vLargeTextField:focus {
+  border-color: #7ea8c7;
+  box-shadow: 0 0 0 4px rgba(26, 90, 127, 0.12);
+  outline: none;
+}
+
+textarea {
+  min-height: 140px;
+}
+
+.help,
+p.help,
+.helptext,
+.aligned .help,
+.aligned p.help {
+  color: var(--muted);
+}
+
+.submit-row {
+  padding: 16px 20px;
+}
+
+.submit-row a.deletelink {
+  border-radius: 999px;
+}
+
+.change-list #content h1 {
+  margin: 0 0 14px;
+}
+
+#changelist {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 240px;
+  gap: 16px;
+  align-items: start;
+}
+
+#changelist #changelist-form {
+  min-width: 0;
+  display: grid;
+  gap: 18px;
+  align-self: start;
+}
+
+#changelist-search {
+  margin: 0;
+  padding: 8px 12px;
+}
+
+#changelist-search .actions,
+#changelist .actions {
+  box-sizing: border-box;
+}
+
+#changelist-search form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap;
+}
+
+#changelist-search label {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+#changelist-search input[type="text"] {
+  flex: 1 1 auto;
+  width: auto;
+  margin: 0;
+  min-width: 0;
+}
+
+#changelist-search input[type="submit"] {
+  flex: 0 0 auto;
+}
+
+#changelist .actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  margin: 0;
+  border-radius: 10px;
+}
+
+#changelist .actions label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 0;
+}
+
+#changelist .actions select {
+  min-width: 220px;
+}
+
+#changelist-form .results,
+#changelist-form .paginator {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: none;
+  border-radius: 12px;
+}
+
+#changelist-form .results {
+  overflow: hidden;
+}
+
+#changelist-form .results,
+#changelist-form .paginator,
+#changelist .actions {
+  width: 100%;
+}
+
+#changelist .paginator {
+  margin-top: 0;
+}
+
+#changelist-form .results {
+  overflow-x: auto;
+}
+
+#changelist-form table {
+  min-width: 920px;
+}
+
+#changelist-filter {
+  padding: 12px 14px;
+  margin: 0;
+  align-self: start;
+  position: sticky;
+  top: 24px;
+  min-width: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+#changelist-filter h2 {
+  background: transparent;
+  color: var(--text);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin: 0 0 10px;
+  padding: 0;
+}
+
+#changelist-filter h3 {
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 14px 0 8px;
+}
+
+#changelist-filter li {
+  margin: 6px 0;
+}
+
+#nav-sidebar {
+  background: #f8fbfd;
+  border-right: 1px solid var(--border);
+  box-shadow: none;
+  padding: 14px 12px;
+}
+
+#nav-sidebar,
+#nav-sidebar .module,
+#nav-sidebar .current-app,
+#nav-sidebar .current-model {
+  min-width: 0;
+}
+
+#nav-sidebar .module,
+#nav-sidebar .current-app {
+  margin-bottom: 10px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: transparent;
+  border: 1px solid #e6edf3;
+  box-shadow: none;
+}
+
+#nav-sidebar .module table,
+#nav-sidebar .module tbody,
+#nav-sidebar .module tr {
+  background: transparent;
+}
+
+#nav-sidebar .module th,
+#nav-sidebar .module td {
+  padding: 0;
+}
+
+#nav-sidebar .module caption,
+#nav-sidebar .module h2 {
+  margin: 0;
+  padding: 12px 16px;
+  border-radius: 0;
+  color: #fff !important;
+  background: #183964 !important;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+#nav-sidebar .module caption a,
+#nav-sidebar .module h2 a,
+#nav-sidebar .module caption,
+#nav-sidebar .module h2 {
+  color: #fff !important;
+}
+
+#nav-sidebar .module a,
+#nav-sidebar .module th a,
+#nav-sidebar .module td a {
+  display: block;
+  padding: 12px 16px;
+}
+
+#nav-sidebar .current-app .section,
+#nav-sidebar .current-model {
+  background: rgba(26, 90, 127, 0.08);
+}
+
+#nav-sidebar a {
+  color: var(--text);
+}
+
+#nav-filter {
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 10px 12px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 16px;
+}
+
+.object-tools {
+  display: flex;
+  gap: 10px;
+  margin: 0 0 10px;
+  padding: 0;
+  justify-content: flex-end;
+}
+
+.object-tools li {
+  margin: 0;
+}
+
+.object-tools a:link,
+.object-tools a:visited,
+.addlink,
+.changelink,
+.deletelink {
+  border-radius: 999px;
+}
+
+.change-list .object-tools a:link,
+.change-list .object-tools a:visited {
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+ul.messagelist {
+  padding: 0;
+}
+
+.messagelist li {
+  margin: 0 0 14px;
+  padding: 14px 18px;
+}
+
+.paginator {
+  margin-top: 18px;
+  padding: 14px 18px;
+}
+
+.change-list #content-main,
+.change-list #content-related {
+  min-width: 0;
+}
+
+.change-list #content-main > form,
+.change-list #content-main > .module {
+  min-width: 0;
+}
+
+.login {
+  background:
+    radial-gradient(circle at top left, rgba(255,255,255,0.55), transparent 24%),
+    linear-gradient(180deg, #eef4f8 0%, #f8fbfd 100%);
+}
+
+.login div.breadcrumbs,
+.login #nav-sidebar,
+.login #content-related,
+.login .mox-mobile-admin-nav,
+.login #toggle-nav-sidebar {
+  display: none !important;
+}
+
+.login #header {
+  padding: 18px 24px;
+}
+
+.login #site-name {
+  float: none;
+}
+
+.login #container {
+  display: block;
+  min-height: 100vh;
+}
+
+.login #container {
+  min-height: 100vh;
+}
+
+.login #content {
+  padding: 48px 16px 64px;
+  max-width: none;
+}
+
+.login #content-main {
+  width: min(520px, calc(100vw - 32px));
+  margin: 0 auto;
+  float: none;
+}
+
+.login .form-row {
+  padding: 0;
+  border: 0;
+  margin-bottom: 16px;
+  display: grid;
+  gap: 8px;
+}
+
+.login .submit-row {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 12px 0 0;
+  margin: 0;
+}
+
+.login #header {
+  box-shadow: none;
+}
+
+.mox-admin-dashboard {
+  display: grid;
+  gap: 24px;
+}
+
+.mox-hero {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: flex-start;
+  padding: 28px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(12,28,59,0.98), rgba(26,90,127,0.98));
+  color: #fff;
+  box-shadow: 0 16px 40px rgba(12, 28, 59, 0.14);
+}
+
+.mox-eyebrow {
+  margin: 0 0 10px;
+  font-size: 12px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+}
+
+.mox-hero h1 {
+  margin: 0 0 10px;
+  font-size: 34px;
+  line-height: 1.1;
+  color: #fff;
+}
+
+.mox-hero p {
+  margin: 0;
+  max-width: 720px;
+  color: rgba(255,255,255,0.86);
+}
+
+.mox-hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.mox-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.85fr);
+  gap: 24px;
+}
+
+.mox-panel {
+  background: #fff;
+  border: 1px solid #e6edf3;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 10px 28px rgba(12, 28, 59, 0.05);
+}
+
+.mox-panel-header h2 {
+  margin: 0 0 8px;
+  font-size: 22px;
+}
+
+.mox-panel-header p {
+  margin: 0 0 20px;
+  color: #58708a;
+}
+
+.mox-app-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.mox-app-card {
+  display: block;
+  padding: 12px 14px;
+  border: 1px solid #e6edf3;
+  border-radius: 8px;
+  background: #fff;
+  text-decoration: none;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.mox-app-card:hover {
+  border-color: #bfd2e1;
+  background: #f9fbfd;
+}
+
+.mox-app-name {
+  margin: 0 0 6px;
+  font-weight: 700;
+  color: #12233f;
+}
+
+.mox-app-meta {
+  margin: 0 0 10px;
+  color: #67819b;
+  font-size: 13px;
+}
+
+.mox-app-link {
+  color: #1a5a7f;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.mox-activity-list {
+  display: grid;
+  gap: 8px;
+}
+
+.mox-activity-item {
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid #e6edf3;
+}
+
+.mox-activity-title {
+  margin: 0 0 4px;
+  font-weight: 600;
+  color: #12233f;
+}
+
+.mox-activity-meta {
+  margin: 0;
+  color: #67819b;
+  font-size: 13px;
+}
+
+.mox-empty-state {
+  margin: 0;
+  color: #67819b;
+}
+
+.mox-login-shell {
+  width: min(520px, calc(100vw - 32px));
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 28px;
+  box-shadow: 0 18px 44px rgba(12, 28, 59, 0.10);
+}
+
+.mox-login-copy {
+  margin-bottom: 22px;
+}
+
+.mox-login-copy h1 {
+  margin: 0 0 8px;
+  font-size: 32px;
+  line-height: 1.05;
+  color: var(--text);
+}
+
+.login #content h1 {
+  display: none;
+}
+
+.login form {
+  margin: 0;
+}
+
+.login .form-row label {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.login .form-row input[type="text"],
+.login .form-row input[type="password"] {
+  width: 100%;
+}
+
+.login .errornote {
+  margin: 0 0 16px;
+  border-radius: 12px;
+}
+
+.login .submit-row input[type="submit"] {
+  width: 100%;
+  min-height: 48px;
+  border-radius: 14px;
+  font-weight: 700;
+}
+
+.login .password-reset-link {
+  margin-top: 6px;
+}
+
+.mox-media-thumb {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 40px;
+  padding: 2px;
+  border: 1px solid #dbe5ed;
+  border-radius: 8px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.mox-media-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 7px;
+  display: block;
+}
+
+.mox-empty-media {
+  display: inline-block;
+  min-width: 0;
+  height: auto;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  border: 0;
+  color: #6d8397;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.mox-status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 72px;
+  padding: 5px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.mox-status-success {
+  color: #166448;
+  background: #ecfbf3;
+  border-color: #ccefdc;
+}
+
+.mox-status-muted {
+  color: #51657a;
+  background: #f4f7fa;
+  border-color: #dde6ee;
+}
+
+.mox-status-warning {
+  color: #8a5a00;
+  background: #fff7e4;
+  border-color: #f1dfad;
+}
+
+.mox-status-info {
+  color: #1f5f86;
+  background: #eef7fd;
+  border-color: #cfe6f5;
+}
+
+.mox-file-link {
+  color: #1a5a7f;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+@media (max-width: 1360px) {
+  #changelist {
+    grid-template-columns: minmax(0, 1fr) 220px;
+    gap: 14px;
+  }
+
+  #content {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 1180px) {
+  #changelist {
+    grid-template-columns: 1fr;
+  }
+
+  #changelist-filter {
+    position: static;
+    order: -1;
+  }
+
+  #changelist-form table {
+    min-width: 760px;
+  }
+}
+
+@media (max-width: 1024px) {
+  #container {
+    display: block;
+  }
+
+  #nav-sidebar {
+    width: 100%;
+    max-width: none;
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+    box-shadow: inset 0 -1px 0 rgba(12, 28, 59, 0.04);
+    padding: 12px 12px 14px;
+    background: linear-gradient(180deg, #f8fbfd 0%, #fdfefe 100%);
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  #content {
+    padding: 16px;
+  }
+
+  .mox-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #nav-sidebar .module,
+  #nav-sidebar .current-app {
+    display: inline-block;
+    vertical-align: top;
+    width: min(280px, calc(100vw - 32px));
+    margin-right: 12px;
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  #header {
+    padding: 12px 16px;
+  }
+
+  #site-name,
+  #user-tools {
+    float: none;
+    text-align: left;
+  }
+
+  #content {
+    padding: 12px;
+  }
+
+  .mox-mobile-admin-nav {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 12px 0 2px;
+    margin-top: 10px;
+    scrollbar-width: none;
+  }
+
+  .mox-mobile-admin-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mox-mobile-admin-nav a {
+    flex: 0 0 auto;
+    padding: 9px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff !important;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  #nav-sidebar {
+    display: none;
+  }
+
+  .module,
+  .inline-group,
+  .submit-row,
+  .messagelist li,
+  .dashboard #content .module,
+  form .aligned fieldset {
+    border-radius: 14px;
+  }
+
+  #changelist-filter,
+  #changelist .actions,
+  #changelist .paginator,
+  #changelist-form .results {
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(12, 28, 59, 0.05);
+  }
+
+  #changelist .actions {
+    align-items: stretch;
+  }
+
+  #changelist .actions label,
+  #changelist .actions select,
+  #changelist .actions button,
+  #changelist .actions input[type="submit"] {
+    width: 100%;
+  }
+
+  #changelist-search input[type="text"] {
+    width: 100%;
+  }
+
+  #changelist-search {
+    align-items: stretch;
+    flex-wrap: wrap;
+  }
+
+  #changelist-form table {
+    min-width: 680px;
+  }
+
+  .object-tools {
+    justify-content: stretch;
+  }
+
+  .object-tools li,
+  .object-tools a {
+    width: 100%;
+  }
+
+  .mox-hero {
+    flex-direction: column;
+    padding: 22px;
+  }
+
+  .mox-hero h1 {
+    font-size: 28px;
+  }
+
+  .mox-hero-actions {
+    width: 100%;
+  }
+
+  .mox-hero-actions .button,
+  .mox-hero-actions a {
+    width: 100%;
+    text-align: center;
+  }
+
+  .mox-app-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #nav-sidebar {
+    padding: 10px 10px 12px;
+  }
+
+  #nav-sidebar .module,
+  #nav-sidebar .current-app {
+    width: calc(100vw - 24px);
+    margin-right: 10px;
+  }
+}
+
+@media (max-width: 520px) {
+  #header {
+    padding: 10px 12px;
+  }
+
+  #content {
+    padding: 10px;
+  }
+
+  #changelist-form table {
+    min-width: 620px;
+  }
+
+  #nav-sidebar .module,
+  #nav-sidebar .current-app {
+    width: calc(100vw - 20px);
+    margin-right: 8px;
+  }
+
+  .form-row,
+  .aligned .form-row {
+    padding: 16px;
+  }
+}
+
+.mox-login-copy p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.mox-login-badge {
+  margin: 0 0 12px;
+  font-size: 12px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #6f8ca4;
+  font-weight: 700;
+}
+
+@media (max-width: 1024px) {
+  .mox-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #changelist {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .mox-hero {
+    padding: 20px;
+    flex-direction: column;
+  }
+
+  .mox-hero h1 {
+    font-size: 28px;
+  }
+
+  .mox-app-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #content {
+    padding: 16px;
+  }
+}
