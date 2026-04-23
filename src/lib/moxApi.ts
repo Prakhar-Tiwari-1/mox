@@ -23,7 +23,7 @@ export interface PublicEvent {
 function toEvent(raw: any): PublicEvent {
   const startAt = raw.start_at ? new Date(raw.start_at) : null;
   return {
-    id: raw.id,
+    id: raw.instance_id || raw.id,
     slug: raw.slug,
     title: raw.title,
     description: raw.description || '',
@@ -35,7 +35,7 @@ function toEvent(raw: any): PublicEvent {
     image_url: raw.image_url || '/images/events/event-1.jpg',
     category: raw.club_name || raw.category || 'Event',
     status: raw.temporal_status || raw.status || 'upcoming',
-    max_attendees: raw.max_attendees || 100,
+    max_attendees: raw.max_attendees ?? 100,
     club_name: raw.club_name,
     is_featured: raw.is_featured,
     registration_url: raw.registration_url || '',
@@ -88,7 +88,7 @@ function toClub(raw: any): ClubProfile {
       ? raw.events.map((event: any) => {
           const startAt = event.start_at ? new Date(event.start_at) : null;
           return {
-            id: event.id,
+            id: event.instance_id || event.id,
             slug: event.slug,
             title: event.title,
             date: startAt ? startAt.toISOString().slice(0, 10) : '',
@@ -98,6 +98,23 @@ function toClub(raw: any): ClubProfile {
             location: event.location || '',
           };
         })
+      : [],
+    sections: Array.isArray(raw.sections)
+      ? raw.sections.map((section: any) => ({
+          id: section.id,
+          title: section.title,
+          slug: section.slug,
+          kind: section.kind,
+          content: section.content || '',
+          images: Array.isArray(section.images)
+            ? section.images.map((image: any) => ({
+                id: image.id,
+                image_url: image.image_url || '',
+                caption: image.caption || '',
+                display_order: image.display_order ?? 0,
+              }))
+            : [],
+        }))
       : [],
   };
 }

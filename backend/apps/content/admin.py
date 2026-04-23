@@ -5,7 +5,7 @@ from django.utils.html import format_html
 from apps.users.models import UserRole
 
 from .mailers import send_contact_reply
-from .models import AuditLog, Club, ClubMember, ContactMessage, Event, EventAsset, FAQItem, LeadershipMember
+from .models import AuditLog, Club, ClubMember, ClubSection, ClubSectionImage, ContactMessage, Event, EventAsset, EventExclusion, FAQItem, LeadershipMember
 
 
 def image_preview(file_field, label="No image"):
@@ -66,6 +66,12 @@ class ClubMemberInline(admin.TabularInline):
     member_image_preview.short_description = "Image preview"
 
 
+class ClubSectionInline(admin.TabularInline):
+    model = ClubSection
+    extra = 0
+    fields = ("display_order", "title", "kind", "status")
+
+
 class EventAssetInline(admin.TabularInline):
     model = EventAsset
     extra = 0
@@ -80,6 +86,12 @@ class EventAssetInline(admin.TabularInline):
         return asset_preview(obj.file)
 
     asset_preview.short_description = "Current asset"
+
+
+class EventExclusionInline(admin.TabularInline):
+    model = EventExclusion
+    extra = 0
+    fields = ("excluded_date", "note")
 
 
 class ClubScopedAdminMixin:
@@ -147,7 +159,7 @@ class ClubAdmin(ClubScopedAdminMixin, admin.ModelAdmin):
     list_filter = ("status",)
     search_fields = ("name", "description", "contact_email")
     readonly_fields = ("club_image_preview",)
-    inlines = [ClubMemberInline]
+    inlines = [ClubMemberInline, ClubSectionInline]
     fieldsets = (
         ("Club basics", {"fields": ("name", "slug", "tagline", "description", "status")}),
         ("Media", {"fields": ("image", "club_image_preview")}),
@@ -176,6 +188,18 @@ class ClubAdmin(ClubScopedAdminMixin, admin.ModelAdmin):
     def delete_model(self, request, obj):
         log_audit(request, "club.deleted", obj)
         super().delete_model(request, obj)
+
+
+class ClubSectionImageInline(admin.TabularInline):
+    model = ClubSectionImage
+    extra = 0
+    fields = ("display_order", "image", "caption", "section_image_preview")
+    readonly_fields = ("section_image_preview",)
+
+    def section_image_preview(self, obj):
+        return image_preview(obj.image, "No image")
+
+    section_image_preview.short_description = "Image"
 
 
 @admin.register(ClubMember)
@@ -220,6 +244,43 @@ class ClubMemberAdmin(ClubScopedAdminMixin, admin.ModelAdmin):
     def delete_model(self, request, obj):
         log_audit(request, "club_member.deleted", obj)
         super().delete_model(request, obj)
+
+
+@admin.register(ClubSection)
+class ClubSectionAdmin(ClubScopedAdminMixin, admin.ModelAdmin):
+    list_display = ("title", "club", "kind", "display_order", "status_badge")
+    list_filter = ("status", "kind", "club")
+    search_fields = ("title", "content", "club__name")
+    inlines = [ClubSectionImageInline]
+    fieldsets = (
+        ("Section", {"fields": ("club", "title", "slug", "kind", "content", "display_order", "status")}),
+    )
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "club" and getattr(request.user, "role", None) == UserRole.CLUB_MANAGER and not request.user.is_superuser:
+            managed_club = getattr(request.user, "managed_club", None)
+            kwargs["queryset"] = Club.objects.filter(pk=getattr(managed_club, "pk", None))
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+    def save_model(self, request, obj, form, change):
+        if getattr(request.user, "role", None) == UserRole.CLUB_MANAGER and not request.user.is_superuser and request.user.managed_club_id:
+            obj.club_id = request.user.managed_club_id
+        super().save_model(request, obj, form, change)
+        log_audit(
+            request,
+            "club_section.updated" if change else "club_section.created",
+            obj,
+            {"changed_fields": list(form.changed_data)},
+        )
+
+    def delete_model(self, request, obj):
+        log_audit(request, "club_section.deleted", obj)
+        super().delete_model(request, obj)
+
+    def status_badge(self, obj):
+        return status_badge(obj.status)
+
+    status_badge.short_description = "Status"
 
 
 @admin.register(LeadershipMember)
@@ -272,10 +333,23 @@ class EventAdmin(ClubScopedAdminMixin, admin.ModelAdmin):
     list_filter = ("status", "is_featured", "club")
     search_fields = ("title", "description", "location")
     readonly_fields = ("event_image_preview",)
-    inlines = [EventAssetInline]
+    inlines = [EventAssetInline, EventExclusionInline]
     fieldsets = (
         ("Event basics", {"fields": ("title", "slug", "description", "club", "status", "is_featured")}),
-        ("Schedule", {"fields": ("start_at", "end_at", "location")}),
+        (
+            "Schedule",
+            {
+                "fields": (
+                    "start_at",
+                    "end_at",
+                    "location",
+                    "max_attendees",
+                    "recurrence_frequency",
+                    "recurrence_interval",
+                    "recurrence_until",
+                )
+            },
+        ),
         ("Registration", {"fields": ("registration_url",)}),
         ("Media", {"fields": ("image", "event_image_preview")}),
         ("Metadata", {"fields": ("tags",)}),

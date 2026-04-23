@@ -204,7 +204,6 @@ input[type="url"],
 input[type="number"],
 input[type="tel"],
 textarea,
-select,
 .vTextField,
 .vURLField,
 .vIntegerField,
@@ -216,6 +215,21 @@ select,
   padding: 12px 14px;
   box-sizing: border-box;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+select {
+  border: 1px solid #ccd8e2;
+  border-radius: 14px;
+  background: #fff;
+  color: var(--text);
+  box-sizing: border-box;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  min-height: 48px;
+  line-height: 1.35;
+  padding: 10px 42px 10px 14px;
+  appearance: auto;
+  -webkit-appearance: menulist;
+  -moz-appearance: menulist;
 }
 
 input:focus,

@@ -1,6 +1,10 @@
 from rest_framework import serializers
 
-from .models import Club, ClubMember, ContactMessage, Event, EventAsset, FAQItem, LeadershipMember
+import copy
+
+from django.utils import timezone
+
+from .models import Club, ClubMember, ClubSection, ClubSectionImage, ContactMessage, Event, EventAsset, FAQItem, LeadershipMember
 
 
 class ClubMemberSerializer(serializers.ModelSerializer):
@@ -26,6 +30,28 @@ class ClubMemberSerializer(serializers.ModelSerializer):
         return obj.image.url if obj.image else ""
 
 
+class ClubSectionImageSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ClubSectionImage
+        fields = ["id", "image_url", "caption", "display_order"]
+
+    def get_image_url(self, obj):
+        request = self.context.get("request")
+        if obj.image and request:
+            return request.build_absolute_uri(obj.image.url)
+        return obj.image.url if obj.image else ""
+
+
+class ClubSectionSerializer(serializers.ModelSerializer):
+    images = ClubSectionImageSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = ClubSection
+        fields = ["id", "title", "slug", "kind", "content", "display_order", "images"]
+
+
 class EventAssetSerializer(serializers.ModelSerializer):
     file_url = serializers.SerializerMethodField()
 
@@ -41,17 +67,33 @@ class EventAssetSerializer(serializers.ModelSerializer):
 
 
 class ClubEventSummarySerializer(serializers.ModelSerializer):
-    temporal_status = serializers.CharField(read_only=True)
+    temporal_status = serializers.SerializerMethodField()
+    instance_id = serializers.SerializerMethodField()
+    start_at = serializers.SerializerMethodField()
 
     class Meta:
         model = Event
-        fields = ["id", "slug", "title", "start_at", "location", "temporal_status"]
+        fields = ["id", "instance_id", "slug", "title", "start_at", "location", "temporal_status"]
+
+    def get_instance_id(self, obj):
+        occurrence_start = getattr(obj, "occurrence_start_at", None)
+        if occurrence_start:
+            return f"{obj.pk}::{occurrence_start.isoformat()}"
+        return str(obj.pk)
+
+    def get_start_at(self, obj):
+        return getattr(obj, "occurrence_start_at", obj.start_at)
+
+    def get_temporal_status(self, obj):
+        effective_start = getattr(obj, "occurrence_start_at", obj.start_at)
+        return "past" if effective_start < timezone.now() else "upcoming"
 
 
 class ClubSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField()
     members = ClubMemberSerializer(many=True, read_only=True)
     events = serializers.SerializerMethodField()
+    sections = serializers.SerializerMethodField()
 
     class Meta:
         model = Club
@@ -66,6 +108,7 @@ class ClubSerializer(serializers.ModelSerializer):
             "contact_phone",
             "members",
             "events",
+            "sections",
         ]
 
     def get_image_url(self, obj):
@@ -76,11 +119,26 @@ class ClubSerializer(serializers.ModelSerializer):
 
     def get_events(self, obj):
         published_events = obj.events.filter(status="published").order_by("start_at")
+        now = timezone.now()
+        expanded_events = []
+        for event in published_events:
+            for occurrence_start in event.get_occurrence_starts(
+                window_start=now - timezone.timedelta(days=180),
+                window_end=now + timezone.timedelta(days=365),
+            ):
+                event_instance = copy.copy(event)
+                event_instance.occurrence_start_at = occurrence_start
+                expanded_events.append(event_instance)
+        expanded_events.sort(key=lambda item: getattr(item, "occurrence_start_at", item.start_at))
         return ClubEventSummarySerializer(
-            published_events,
+            expanded_events,
             many=True,
             context=self.context,
         ).data
+
+    def get_sections(self, obj):
+        published_sections = obj.sections.filter(status="published").prefetch_related("images")
+        return ClubSectionSerializer(published_sections, many=True, context=self.context).data
 
 
 class LeadershipMemberSerializer(serializers.ModelSerializer):
@@ -114,19 +172,27 @@ class LeadershipMemberSerializer(serializers.ModelSerializer):
 class EventSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField()
     club_name = serializers.CharField(source="club.name", read_only=True)
-    temporal_status = serializers.CharField(read_only=True)
+    temporal_status = serializers.SerializerMethodField()
+    instance_id = serializers.SerializerMethodField()
+    start_at = serializers.SerializerMethodField()
+    end_at = serializers.SerializerMethodField()
     assets = EventAssetSerializer(many=True, read_only=True)
 
     class Meta:
         model = Event
         fields = [
             "id",
+            "instance_id",
             "title",
             "slug",
             "description",
             "location",
             "start_at",
             "end_at",
+            "recurrence_frequency",
+            "recurrence_interval",
+            "recurrence_until",
+            "max_attendees",
             "image_url",
             "registration_url",
             "tags",
@@ -142,6 +208,25 @@ class EventSerializer(serializers.ModelSerializer):
         if obj.image and request:
             return request.build_absolute_uri(obj.image.url)
         return obj.image.url if obj.image else ""
+
+    def get_instance_id(self, obj):
+        occurrence_start = getattr(obj, "occurrence_start_at", None)
+        if occurrence_start:
+            return f"{obj.pk}::{occurrence_start.isoformat()}"
+        return str(obj.pk)
+
+    def get_start_at(self, obj):
+        return getattr(obj, "occurrence_start_at", obj.start_at)
+
+    def get_end_at(self, obj):
+        occurrence_end = getattr(obj, "occurrence_end_at", None)
+        if occurrence_end:
+            return occurrence_end
+        return obj.end_at
+
+    def get_temporal_status(self, obj):
+        effective_start = getattr(obj, "occurrence_start_at", obj.start_at)
+        return "past" if effective_start < timezone.now() else "upcoming"
 
 
 class ContactMessageCreateSerializer(serializers.ModelSerializer):

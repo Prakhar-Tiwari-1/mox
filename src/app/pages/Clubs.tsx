@@ -54,7 +54,7 @@ export default function Clubs() {
                   </Card>
                 ))
               : clubs.map((club) => (
-              <Card key={club.id} className="overflow-hidden hover:shadow-xl transition-shadow h-full">
+              <Card key={club.id} className="overflow-hidden hover:shadow-xl transition-shadow h-full flex flex-col">
                 <div className="aspect-[16/10] overflow-hidden">
                   <ImageWithFallback
                     src={club.image_url}
@@ -62,13 +62,13 @@ export default function Clubs() {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <CardHeader>
+                <CardHeader className="space-y-3">
                   <CardTitle>{club.name}</CardTitle>
-                  <CardDescription>{club.tagline}</CardDescription>
+                  <CardDescription className="min-h-[3rem]">{club.tagline}</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-4 flex flex-1 flex-col">
                   <p className="text-sm text-gray-600 line-clamp-4">{club.description}</p>
-                  <Button asChild className="w-full">
+                  <Button asChild className="w-full mt-auto">
                     <Link to={`/clubs/${club.slug}`}>
                       Open club page
                       <ArrowRight className="ml-2 h-4 w-4" />

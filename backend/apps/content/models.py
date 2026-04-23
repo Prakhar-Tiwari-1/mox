@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.utils import timezone
+from django.utils.dateparse import parse_date
 from django.utils.text import slugify
 
 User = get_user_model()
@@ -40,6 +41,11 @@ class MessageStatus(models.TextChoices):
     REPLIED = "replied", "Replied"
 
 
+class EventRecurrenceFrequency(models.TextChoices):
+    NONE = "none", "Does not repeat"
+    WEEKLY = "weekly", "Weekly"
+
+
 class Club(TimeStampedModel):
     name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=220, unique=True, blank=True)
@@ -65,6 +71,49 @@ class Club(TimeStampedModel):
 
     def __str__(self) -> str:
         return self.name
+
+
+class ClubSectionKind(models.TextChoices):
+    CONTENT = "content", "Content"
+    GALLERY = "gallery", "Gallery"
+
+
+class ClubSection(TimeStampedModel):
+    club = models.ForeignKey(Club, on_delete=models.CASCADE, related_name="sections")
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=220, blank=True)
+    kind = models.CharField(max_length=20, choices=ClubSectionKind.choices, default=ClubSectionKind.CONTENT)
+    content = models.TextField(blank=True)
+    display_order = models.PositiveIntegerField(default=0)
+    status = models.CharField(max_length=20, choices=PublishStatus.choices, default=PublishStatus.DRAFT)
+
+    class Meta:
+        ordering = ["display_order", "title"]
+        unique_together = [("club", "slug")]
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
+    def __str__(self) -> str:
+        return f"{self.club.name} - {self.title}"
+
+
+class ClubSectionImage(TimeStampedModel):
+    section = models.ForeignKey(ClubSection, on_delete=models.CASCADE, related_name="images")
+    image = models.ImageField(
+        upload_to="club_sections/",
+        validators=[FileExtensionValidator(allowed_extensions=SAFE_IMAGE_EXTENSIONS), validate_file_size],
+    )
+    caption = models.CharField(max_length=255, blank=True)
+    display_order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["display_order", "id"]
+
+    def __str__(self) -> str:
+        return f"{self.section.title} image"
 
 
 class ClubMember(TimeStampedModel):
@@ -130,6 +179,14 @@ class Event(TimeStampedModel):
     location = models.CharField(max_length=255)
     start_at = models.DateTimeField()
     end_at = models.DateTimeField(blank=True, null=True)
+    recurrence_frequency = models.CharField(
+        max_length=20,
+        choices=EventRecurrenceFrequency.choices,
+        default=EventRecurrenceFrequency.NONE,
+    )
+    recurrence_interval = models.PositiveIntegerField(default=1)
+    recurrence_until = models.DateField(blank=True, null=True)
+    max_attendees = models.PositiveIntegerField(default=100)
     image = models.ImageField(
         upload_to="events/",
         blank=True,
@@ -153,8 +210,57 @@ class Event(TimeStampedModel):
     def temporal_status(self) -> str:
         return "past" if self.start_at < timezone.now() else "upcoming"
 
+    @property
+    def duration(self):
+        if self.end_at:
+            return self.end_at - self.start_at
+        return None
+
+    def is_excluded_on(self, date_value):
+        if isinstance(date_value, str):
+            date_value = parse_date(date_value)
+        return self.exclusions.filter(excluded_date=date_value).exists()
+
+    def get_occurrence_starts(self, window_start=None, window_end=None):
+        if self.recurrence_frequency == EventRecurrenceFrequency.NONE:
+            starts = [self.start_at]
+        else:
+            starts = []
+            current = self.start_at
+            interval_days = 7 * max(self.recurrence_interval, 1)
+            series_end = self.recurrence_until or (
+                window_end.date() if window_end else self.start_at.date()
+            )
+            while current.date() <= series_end:
+                starts.append(current)
+                current = current + timezone.timedelta(days=interval_days)
+
+        filtered = []
+        for occurrence_start in starts:
+            if window_start and occurrence_start < window_start:
+                continue
+            if window_end and occurrence_start > window_end:
+                continue
+            if self.is_excluded_on(occurrence_start.date()):
+                continue
+            filtered.append(occurrence_start)
+        return filtered
+
     def __str__(self) -> str:
         return self.title
+
+
+class EventExclusion(TimeStampedModel):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="exclusions")
+    excluded_date = models.DateField()
+    note = models.CharField(max_length=255, blank=True)
+
+    class Meta:
+        ordering = ["excluded_date"]
+        unique_together = [("event", "excluded_date")]
+
+    def __str__(self) -> str:
+        return f"{self.event.title} excluded on {self.excluded_date}"
 
 
 class EventAssetKind(models.TextChoices):

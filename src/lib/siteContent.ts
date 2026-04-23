@@ -40,6 +40,19 @@ export interface ClubProfile {
     time?: string;
     location?: string;
   }[];
+  sections?: {
+    id: string;
+    title: string;
+    slug?: string;
+    kind: 'content' | 'gallery';
+    content?: string;
+    images?: {
+      id: string;
+      image_url: string;
+      caption?: string;
+      display_order?: number;
+    }[];
+  }[];
 }
 
 export interface FAQItem {
